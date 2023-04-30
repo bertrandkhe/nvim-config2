@@ -43,10 +43,16 @@ require('packer').startup(function()
   }
   use 'nvim-treesitter/playground'
   use 'b0o/schemastore.nvim'
+  use({
+    "aserowy/tmux.nvim",
+    config = function() return require("tmux").setup() end
+  })
 end)
 
 
 require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all" (the five listed parsers should always be installed)
+  ensure_installed = { "lua", "vim", "vimdoc", "css", "gitignore", "jsdoc", "json", "javascript", "typescript", "yaml" },
   highlight = {
     enable = true
   },
