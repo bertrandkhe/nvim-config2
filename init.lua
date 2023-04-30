@@ -4,7 +4,20 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.cindent = true
 vim.opt.smartindent = true
-vim.cmd[[colorscheme tokyonight]]
+
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
+end
+
+local packer_bootstrap = ensure_packer()
+
 
 local use = require('packer').use
 require('packer').startup(function()
@@ -47,6 +60,12 @@ require('packer').startup(function()
     "aserowy/tmux.nvim",
     config = function() return require("tmux").setup() end
   })
+
+  -- Automatically set up your configuration after cloning packer.nvim
+  -- Put this at the end after all plugins
+  if packer_bootstrap then
+    require('packer').sync()
+  end
 end)
 
 
@@ -186,3 +205,4 @@ cmp.setup.cmdline(':', {
 
 require('mylspconfig');
 require('telescopeconfig');
+vim.cmd[[colorscheme tokyonight]]
