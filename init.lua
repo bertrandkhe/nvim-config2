@@ -46,6 +46,9 @@ require("packer").startup(
             "nvim-telescope/telescope-file-browser.nvim",
             requires = {"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"}
         }
+        use "nvim-lua/popup.nvim"
+        use "nvim-telescope/telescope-media-files.nvim"
+
         use "vim-airline/vim-airline"
         use "vim-airline/vim-airline-themes"
         use {
@@ -66,6 +69,10 @@ require("packer").startup(
             }
         )
         use "sbdchd/neoformat"
+        use {"stevearc/vim-vscode-snippets"}
+        use "junegunn/fzf"
+        use "junegunn/fzf.vim"
+
     end
 )
 -- Automatically set up your configuration after cloning packer.nvim
