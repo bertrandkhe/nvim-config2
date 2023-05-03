@@ -2,8 +2,6 @@ vim.opt.nu = true
 vim.opt.rnu = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
-vim.opt.cindent = true
-vim.opt.smartindent = true
 
 local ensure_packer = function()
     local fn = vim.fn
@@ -72,7 +70,6 @@ require("packer").startup(
         use {"stevearc/vim-vscode-snippets"}
         use "junegunn/fzf"
         use "junegunn/fzf.vim"
-
     end
 )
 -- Automatically set up your configuration after cloning packer.nvim
