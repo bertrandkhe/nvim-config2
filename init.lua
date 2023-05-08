@@ -38,14 +38,12 @@ require("packer").startup(
             tag = "0.1.1",
             requires = {{"nvim-lua/plenary.nvim"}}
         }
+		use "nvim-tree/nvim-tree.lua"
         use "nvim-tree/nvim-web-devicons"
-
-        use {
-            "nvim-telescope/telescope-file-browser.nvim",
-            requires = {"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"}
-        }
         use "nvim-lua/popup.nvim"
         use "nvim-telescope/telescope-media-files.nvim"
+        use {"nvim-telescope/telescope-fzf-native.nvim", run = "make"}
+        use {"nvim-telescope/telescope-ui-select.nvim"}
 
         use "vim-airline/vim-airline"
         use "vim-airline/vim-airline-themes"
@@ -81,6 +79,7 @@ else
     require("telescopeconfig")
     require("treesitterconfig")
     require("cmpconfig")
+	require("nvimtreeconfig")
     vim.cmd [[colorscheme tokyonight]]
     vim.g.neoformat_enabled_js = {"prettier"}
     vim.g.neoformat_enabled_css = {"prettier"}
