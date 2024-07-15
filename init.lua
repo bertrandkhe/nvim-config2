@@ -35,10 +35,10 @@ require("packer").startup(
         use "lbrayner/vim-rzip"
         use {
             "nvim-telescope/telescope.nvim",
-            tag = "0.1.1",
+            tag = "0.1.3",
             requires = {{"nvim-lua/plenary.nvim"}}
         }
-		use "nvim-tree/nvim-tree.lua"
+        use "nvim-tree/nvim-tree.lua"
         use "nvim-tree/nvim-web-devicons"
         use "nvim-lua/popup.nvim"
         use "nvim-telescope/telescope-media-files.nvim"
@@ -79,7 +79,7 @@ else
     require("telescopeconfig")
     require("treesitterconfig")
     require("cmpconfig")
-	require("nvimtreeconfig")
+    require("nvimtreeconfig")
     vim.cmd [[colorscheme tokyonight]]
     vim.g.neoformat_enabled_js = {"prettier"}
     vim.g.neoformat_enabled_css = {"prettier"}

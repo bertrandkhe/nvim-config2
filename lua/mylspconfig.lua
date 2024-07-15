@@ -82,3 +82,4 @@ require "lspconfig".bashls.setup {}
 require "lspconfig".phpactor.setup {
     capabilities = capabilities
 }
+require'lspconfig'.gopls.setup{}
