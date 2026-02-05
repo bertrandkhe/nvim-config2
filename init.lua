@@ -1,88 +1,27 @@
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.expandtab = true
 vim.opt.nu = true
 vim.opt.rnu = true
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
 
-local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({"git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path})
-        vim.cmd [[packadd packer.nvim]]
-        return true
-    end
-    return false
+local hooks = function(ev)
+	-- Use available |event-data|
+	local name, kind = ev.data.spec.name, ev.data.kind
+	-- Run build script after plugin's code has changed
+	if name == "telescope-fzf-native.nvim" and (kind == "install" or kind == "update") then
+		-- Append `:wait()` if you need synchronous execution
+		vim.system({ "make" }, { cwd = ev.data.path })
+	end
 end
+-- If hooks need to run on install, run this before `vim.pack.add()`
+-- To act on install from lockfile, run before very first `vim.pack.add()`
+vim.api.nvim_create_autocmd("PackChanged", { callback = hooks })
 
-local packer_bootstrap = ensure_packer()
-
-local use = require("packer").use
-require("packer").startup(
-    function()
-        use "folke/tokyonight.nvim"
-
-        use "wbthomason/packer.nvim" -- Package manager
-        use "neovim/nvim-lspconfig" -- Configurations for Nvim LSP
-        use "hrsh7th/cmp-nvim-lsp"
-        use "hrsh7th/cmp-buffer"
-        use "hrsh7th/cmp-path"
-        use "hrsh7th/cmp-cmdline"
-        use "hrsh7th/nvim-cmp"
-
-        use "hrsh7th/cmp-vsnip"
-        use "hrsh7th/vim-vsnip"
-
-        use "lbrayner/vim-rzip"
-        use {
-            "nvim-telescope/telescope.nvim",
-            tag = "0.1.3",
-            requires = {{"nvim-lua/plenary.nvim"}}
-        }
-        use "nvim-tree/nvim-tree.lua"
-        use "nvim-tree/nvim-web-devicons"
-        use "nvim-lua/popup.nvim"
-        use "nvim-telescope/telescope-media-files.nvim"
-        use {"nvim-telescope/telescope-fzf-native.nvim", run = "make"}
-        use {"nvim-telescope/telescope-ui-select.nvim"}
-
-        use "vim-airline/vim-airline"
-        use "vim-airline/vim-airline-themes"
-        use {
-            "nvim-treesitter/nvim-treesitter",
-            run = function()
-                local ts_update = require("nvim-treesitter.install").update({with_sync = true})
-                ts_update()
-            end
-        }
-        use "nvim-treesitter/playground"
-        use "b0o/schemastore.nvim"
-        use(
-            {
-                "aserowy/tmux.nvim",
-                config = function()
-                    return require("tmux").setup()
-                end
-            }
-        )
-        use "sbdchd/neoformat"
-        use {"stevearc/vim-vscode-snippets"}
-        use "junegunn/fzf"
-        use "junegunn/fzf.vim"
-    end
-)
--- Automatically set up your configuration after cloning packer.nvim
--- Put this at the end after all plugins
-if packer_bootstrap then
-    require("packer").sync()
-else
-    require("mylspconfig")
-    require("telescopeconfig")
-    require("treesitterconfig")
-    require("cmpconfig")
-    require("nvimtreeconfig")
-    vim.cmd [[colorscheme tokyonight]]
-    vim.g.neoformat_enabled_js = {"prettier"}
-    vim.g.neoformat_enabled_css = {"prettier"}
-    vim.g.neoformat_enabled_html = {"prettier"}
-    vim.api.nvim_set_keymap("n", "ff", ":Neoformat<CR>", {noremap = true, silent = true})
-end
+require("theme")
+require("tmuxconfig")
+require("explorer")
+require("telescope")
+require("format")
+require("cmpconfig")
+require("lsp")
+require("ts")
