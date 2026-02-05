@@ -1,6 +1,6 @@
 vim.pack.add({
 	"https://github.com/neovim/nvim-lspconfig",
-  "https://github.com/b0o/SchemaStore.nvim",
+	"https://github.com/b0o/SchemaStore.nvim",
 })
 
 vim.diagnostic.config({
@@ -26,6 +26,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- Buffer local mappings.
 		-- See `:help vim.lsp.*` for documentation on any of the below functions
 		local opts = { buffer = ev.buf }
+		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+		vim.keymap.set("n", "gh", vim.lsp.buf.hover, opts)
+		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 		vim.keymap.set("n", "gh", vim.lsp.buf.hover, opts)
 		vim.keymap.set("n", "<space>f", function()
 			vim.lsp.buf.format({ async = true })
@@ -39,10 +43,10 @@ vim.lsp.config("astro", {
 	capabilities = capabilities,
 })
 vim.lsp.enable("astro")
-vim.lsp.config("ts_ls", {
+vim.lsp.config("vtsls", {
 	capabilities = capabilities,
 })
-vim.lsp.enable("ts_ls")
+vim.lsp.enable("vtsls")
 vim.lsp.config("yamlls", {
 	capabilities = capabilities,
 	settings = {
