@@ -2,7 +2,7 @@ vim.pack.add({
 	"https://github.com/nvim-treesitter/nvim-treesitter",
 })
 
-require("nvim-treesitter.configs").setup({
+require("nvim-treesitter.config").setup({
 	-- A list of parser names, or "all"
 	ensure_installed = { "javascript", "typescript", "astro", "html", "css", "lua", "vim", "vimdoc" },
 	-- Install parsers synchronously (only applied to `ensure_installed`)

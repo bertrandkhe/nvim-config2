@@ -1,5 +1,6 @@
 vim.pack.add({
-	{ src = "https://github.com/neovim/nvim-lspconfig" },
+	"https://github.com/neovim/nvim-lspconfig",
+  "https://github.com/b0o/SchemaStore.nvim",
 })
 
 vim.diagnostic.config({
